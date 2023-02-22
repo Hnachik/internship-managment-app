@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface TaskService {
     List<TaskDto> searchTasks(String s);
@@ -23,9 +23,11 @@ public interface TaskService {
 
     ResponseEntity<TaskDto> createTask(Long id, TaskDto taskDto) throws ResourceNotFoundException;
 
-    ResponseEntity<TaskAssignment> createTaskAssignment(Long id, TaskAssignmentDto taskAssignment) throws IOException;
+    ResponseEntity<TaskAssignment> createTaskAssignment(Long studentId, TaskAssignmentDto taskAssignment) throws IOException, ResourceNotFoundException;
 
-    Optional<Object> getAllFiles();
+    Stream<TaskAssignment> getAllAssignments();
 
-    TaskAssignment getFile(String id);
+    TaskAssignment getAssignment(String id);
+
+    ResponseEntity<TaskAssignment> updateTaskAssignment(String id, TaskAssignmentDto taskAssignmentDto) throws IOException, ResourceNotFoundException;
 }

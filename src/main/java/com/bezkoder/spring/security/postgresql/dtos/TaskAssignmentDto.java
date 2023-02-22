@@ -4,16 +4,18 @@ import com.bezkoder.spring.security.postgresql.enums.EStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 public class TaskAssignmentDto {
-    private Long id;
+    private String id;
     private String title;
+    private String type;
     private EStatus status;
     private MultipartFile document;
+    private Long taskId;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,5 +41,21 @@ public class TaskAssignmentDto {
 
     public void setDocument(MultipartFile document) {
         this.document = document;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 }

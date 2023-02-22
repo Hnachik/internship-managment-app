@@ -2,12 +2,13 @@ package com.bezkoder.spring.security.postgresql.controllers;
 
 import com.bezkoder.spring.security.postgresql.dtos.TaskAssignmentDto;
 import com.bezkoder.spring.security.postgresql.dtos.TaskDto;
+import com.bezkoder.spring.security.postgresql.entities.TaskAssignment;
 import com.bezkoder.spring.security.postgresql.exceptions.ResourceNotFoundException;
-import com.bezkoder.spring.security.postgresql.services.InternshipService;
 import com.bezkoder.spring.security.postgresql.services.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -15,13 +16,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TaskController {
 
-    private InternshipService internshipService;
     private final TaskService taskService;
 
     public TaskController(
-            InternshipService internshipService,
             TaskService taskService) {
-        this.internshipService = internshipService;
         this.taskService = taskService;
     }
 
@@ -58,10 +56,18 @@ public class TaskController {
         return taskService.createTask(id, taskDto);
     }
 
-    @PostMapping("/task/{id}/add-task-assignment")
-    public ResponseEntity<TaskAssignmentDto> createTaskAssignment(
-            @PathVariable Long id,
-            @RequestBody TaskAssignmentDto taskAssignmentDto) {
-        return taskService.createTaskAssignment(id, taskAssignmentDto);
+    @PostMapping("students/{studentId}/add-task-assignment")
+    public ResponseEntity<TaskAssignment> createTaskAssignment(
+            @PathVariable Long studentId,
+            @RequestBody TaskAssignmentDto taskAssignmentDto) throws ResourceNotFoundException, IOException {
+        return taskService.createTaskAssignment(studentId, taskAssignmentDto);
+    }
+
+    @PutMapping("update-task-assignment/{id}")
+    public ResponseEntity<TaskAssignment> updateTaskAssignment(
+            @PathVariable String id,
+            @RequestBody TaskAssignmentDto taskAssignmentDto) throws ResourceNotFoundException, IOException {
+        taskAssignmentDto.setId(id);
+        return taskService.updateTaskAssignment(id, taskAssignmentDto);
     }
 }

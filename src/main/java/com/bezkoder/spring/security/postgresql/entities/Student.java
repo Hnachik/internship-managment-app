@@ -24,6 +24,8 @@ public class Student extends User {
     private List<TaskAssignment> taskAssignments = new ArrayList<>();
     @OneToMany(mappedBy = "student")
     private List<StudentRequest> studentRequests = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Supervisor supervisor;
 
     public Student(
             final String firstName,
@@ -111,5 +113,13 @@ public class Student extends User {
 
     public void setStudentRequests(List<StudentRequest> studentRequests) {
         this.studentRequests = studentRequests;
+    }
+
+    public Supervisor getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Supervisor supervisor) {
+        this.supervisor = supervisor;
     }
 }
